@@ -1,8 +1,0 @@
-moveit_setup_assistant_config:
-  URDF:
-    package: industrial_moveit_test_support
-    relative_path: urdf/test_kr210l150.xacro
-  SRDF:
-    relative_path: config/test_kr210.srdf
-  CONFIG:
-    generated_timestamp: 1435788935
