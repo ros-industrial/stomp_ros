@@ -6,21 +6,21 @@ add_definitions("-std=c++11")
 find_package(Eigen3 REQUIRED)
 
 find_package(catkin REQUIRED COMPONENTS
-  roscpp
   cmake_modules
+  rosconsole
+  xmlrpcpp
 )
 
-## System dependencies are found with CMake's conventions
-# find_package(Boost REQUIRED COMPONENTS system)
+find_package(Boost REQUIRED)
 
 ###################################
 ## catkin specific configuration ##
 ###################################
 catkin_package(
   INCLUDE_DIRS include
-  LIBRARIES stomp_core
-  CATKIN_DEPENDS roscpp cmake_modules
-  DEPENDS EIGEN3
+  LIBRARIES ${PROJECT_NAME}
+  CATKIN_DEPENDS rosconsole xmlrpcpp
+  DEPENDS Boost EIGEN3
 )
 
 ###########
@@ -31,6 +31,7 @@ include_directories(
   examples
   ${catkin_INCLUDE_DIRS}
   ${EIGEN3_INCLUDE_DIRS}
+  ${Boost_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
@@ -39,7 +40,7 @@ add_library(${PROJECT_NAME}
    src/utils.cpp
 )
 
-target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 
 add_executable(${PROJECT_NAME}_example examples/stomp_example.cpp)
 target_link_libraries(${PROJECT_NAME}_example ${PROJECT_NAME} ${catkin_LIBRARIES})

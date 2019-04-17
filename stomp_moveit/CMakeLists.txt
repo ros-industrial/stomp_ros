@@ -1,15 +1,19 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(stomp_moveit)
 find_package(catkin REQUIRED COMPONENTS
-  roscpp
-  moveit_core
-  moveit_ros_planning
-  stomp_core
   cmake_modules
-  pluginlib
-  kdl_parser
-  trac_ik_lib
   eigen_conversions
+  geometry_msgs
+  kdl_parser
+  moveit_core
+  moveit_msgs
+  moveit_ros_planning
+  pluginlib
+  roscpp
+  stomp_core
+  tf
+  trac_ik_lib
+  visualization_msgs
 )
 find_package(Eigen3 REQUIRED)
 find_package(Boost REQUIRED COMPONENTS system)
@@ -23,8 +27,21 @@ add_definitions("-std=c++11")
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES ${PROJECT_NAME}
-  CATKIN_DEPENDS moveit_ros_planning moveit_core stomp_core cmake_modules pluginlib roscpp kdl_parser trac_ik_lib
-  DEPENDS EIGEN3
+  CATKIN_DEPENDS
+    geometry_msgs
+    kdl_parser
+    moveit_core
+    moveit_msgs
+    moveit_ros_planning
+    pluginlib
+    roscpp
+    stomp_core
+    tf
+    trac_ik_lib
+    visualization_msgs
+  DEPENDS
+    Boost
+    EIGEN3
 )
 
 ###########
@@ -40,8 +57,8 @@ include_directories(include
 add_library(${PROJECT_NAME}
   src/stomp_optimization_task.cpp
   src/stomp_planner.cpp
-  src/utils/polynomial.cpp
   src/utils/kinematics.cpp
+  src/utils/polynomial.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}
@@ -62,7 +79,7 @@ target_link_libraries(${PROJECT_NAME}_cost_functions ${catkin_LIBRARIES})
 
 # filter plugin(s)
 add_library(${PROJECT_NAME}_noisy_filters
-  src/noisy_filters/joint_limits.cpp  
+  src/noisy_filters/joint_limits.cpp
   src/noisy_filters/multi_trajectory_visualization.cpp
 )
 
@@ -70,9 +87,9 @@ target_link_libraries(${PROJECT_NAME}_noisy_filters ${catkin_LIBRARIES})
 
 # update plugin(s)
 add_library(${PROJECT_NAME}_update_filters
+  src/update_filters/control_cost_projection.cpp
   src/update_filters/polynomial_smoother.cpp
   src/update_filters/trajectory_visualization.cpp
-  src/update_filters/control_cost_projection.cpp
   src/update_filters/update_logger.cpp
   src/utils/polynomial.cpp
  )
@@ -93,14 +110,24 @@ install(DIRECTORY include/${PROJECT_NAME}/
 )
 
 ## Mark executables and/or libraries for installation
-install(TARGETS ${PROJECT_NAME} ${PROJECT_NAME}_planner_manager ${PROJECT_NAME}_cost_functions 
-  ${PROJECT_NAME}_noisy_filters ${PROJECT_NAME}_update_filters ${PROJECT_NAME}_noise_generators
-ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+install(TARGETS
+    ${PROJECT_NAME}
+    ${PROJECT_NAME}_cost_functions
+    ${PROJECT_NAME}_noise_generators
+    ${PROJECT_NAME}_noisy_filters
+    ${PROJECT_NAME}_planner_manager
+    ${PROJECT_NAME}_update_filters
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
-install(FILES cost_function_plugins.xml noise_generator_plugins.xml update_filter_plugins.xml planner_manager_plugins.xml noisy_filter_plugins.xml
+install(FILES
+    cost_function_plugins.xml
+    noise_generator_plugins.xml
+    noisy_filter_plugins.xml
+    planner_manager_plugins.xml
+    update_filter_plugins.xml
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
