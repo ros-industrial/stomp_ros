@@ -26,7 +26,6 @@
   <run_depend>moveit_core</run_depend>
   <run_depend>stomp_core</run_depend>
   <run_depend>pluginlib</run_depend>
-  <run_depend>cmake_modules</run_depend>
   <run_depend>kdl_parser</run_depend>
   <run_depend>trac_ik_lib</run_depend>
   <run_depend>eigen_conversions</run_depend>

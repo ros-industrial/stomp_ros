@@ -19,7 +19,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES stomp_core
-  CATKIN_DEPENDS roscpp cmake_modules
+  CATKIN_DEPENDS roscpp
   DEPENDS EIGEN3
 )
 

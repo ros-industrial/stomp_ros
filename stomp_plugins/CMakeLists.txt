@@ -27,7 +27,7 @@ add_definitions("-std=c++11")
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES ${PROJECT_NAME}
-  CATKIN_DEPENDS moveit_ros_planning moveit_core stomp_core stomp_moveit cmake_modules pluginlib roscpp
+  CATKIN_DEPENDS moveit_ros_planning moveit_core stomp_core stomp_moveit pluginlib roscpp
   DEPENDS EIGEN3
 )
 
