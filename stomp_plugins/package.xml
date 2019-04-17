@@ -14,15 +14,20 @@
 
   <build_depend>cmake_modules</build_depend>
 
+  <depend>boost</depend>
+  <depend>eigen</depend>
+  <depend>eigen_conversions</depend>
   <depend>moveit_core</depend>
   <depend>moveit_ros_planning</depend>
   <depend>pluginlib</depend>
-  <depend>roscpp</depend>
+  <depend>rosconsole</depend>
+  <depend>roslib</depend>
   <depend>stomp_core</depend>
   <depend>stomp_moveit</depend>
+  <depend>xmlrpcpp</depend>
 
   <export>
-    <stomp_moveit plugin="${prefix}/noise_generator_plugins.xml"/>    
+    <stomp_moveit plugin="${prefix}/noise_generator_plugins.xml"/>
     <stomp_moveit plugin="${prefix}/cost_function_plugins.xml"/>
     <stomp_moveit plugin="${prefix}/update_filter_plugins.xml"/>
     <rosdoc config="rosdoc.yaml"/>
