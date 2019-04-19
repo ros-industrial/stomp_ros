@@ -3,7 +3,7 @@
 <package format="2">
   <name>stomp_moveit</name>
   <version>0.1.1</version>
-  <description>The stomp_moveit package.</description>
+  <description>This package wraps the STOMP planner functionality in stomp_core so that it can be used within the MoveIt Motion Planning Framework </description>
   <author>Jorge Nicho</author>
   <maintainer email="jrgnichodevel@gmail.com">Jorge Nicho</maintainer>
   <license>Apache 2.0</license>
