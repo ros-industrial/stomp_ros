@@ -156,18 +156,6 @@ bool CollisionCheck::setMotionPlanRequest(const planning_scene::PlanningSceneCon
   plan_request_ = req;
   error_code.val = moveit_msgs::MoveItErrorCodes::SUCCESS;
 
-  // initialize collision request
-  collision_request_.group_name = group_name_;
-  collision_request_.cost = false;
-  collision_request_.distance = false;
-  collision_request_.max_contacts = 1;
-  collision_request_.max_contacts_per_pair = 1;
-  collision_request_.contacts = true;
-  collision_request_.verbose = false;
-
-  collision_robot_ = planning_scene->getCollisionRobot();
-  collision_world_ = planning_scene->getCollisionWorld();
-
   // storing robot state
   robot_state_.reset(new RobotState(robot_model_ptr_));
   if(!robotStateMsgToRobotState(req.start_state,*robot_state_,true))
@@ -218,9 +206,6 @@ bool CollisionCheck::computeCosts(const Eigen::MatrixXd& parameters,
   raw_costs_.setZero();
 
   // collision
-  collision_detection::CollisionRequest request = collision_request_;
-  collision_detection::CollisionResult result_world_collision, result_robot_collision;
-  std::vector<collision_detection::CollisionResult> results(2);
   validity = true;
 
   // planning groups
@@ -241,31 +226,10 @@ bool CollisionCheck::computeCosts(const Eigen::MatrixXd& parameters,
       robot_state_->setJointGroupPositions(joint_group,parameters.col(t));
       robot_state_->update();
 
-      // checking robot vs world (attached objects, octomap, not in urdf) collisions
-      result_world_collision.distance = std::numeric_limits<double>::max();
-
-      collision_world_->checkRobotCollision(request,
-                                            result_world_collision,
-                                            *collision_robot_,
-                                            *robot_state_,
-                                            planning_scene_->getAllowedCollisionMatrix());
-
-      collision_robot_->checkSelfCollision(request,
-                                           result_robot_collision,
-                                           *robot_state_,
-                                           planning_scene_->getAllowedCollisionMatrix());
-
-      results[0]= result_world_collision;
-      results[1] = result_robot_collision;
-      for(std::vector<collision_detection::CollisionResult>::iterator i = results.begin(); i != results.end(); i++)
+      if (planning_scene_->isStateColliding(*robot_state_, group_name_))
       {
-        collision_detection::CollisionResult& result = *i;
-        if(result.collision)
-        {
-          raw_costs_(t) = collision_penalty_;
-          validity = false;
-          break;
-        }
+        raw_costs_(t) = collision_penalty_;
+        validity = false;
       }
     }
 
@@ -335,9 +299,6 @@ bool CollisionCheck::checkIntermediateCollisions(const Eigen::VectorXd& start,
   }
 
   // setting up collision
-  auto req = collision_request_;
-  req.distance = false;
-  collision_detection::CollisionResult res;
   const moveit::core::JointModelGroup* joint_group = robot_model_ptr_->getJointModelGroup(group_name_);
   start_state->setJointGroupPositions(joint_group,start);
   end_state->setJointGroupPositions(joint_group,end);
