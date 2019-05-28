@@ -274,8 +274,8 @@ bool CollisionCheck::computeCosts(const Eigen::MatrixXd& parameters,
     {
       if(!checkIntermediateCollisions(parameters.col(t),parameters.col(t+1),longest_valid_joint_move_))
       {
-        raw_costs_(t) = 1.0;
-        raw_costs_(t+1) = 1.0;
+        raw_costs_(t) = collision_penalty_;
+        raw_costs_(t+1) = collision_penalty_;
         validity = false;
         skip_next_check = true;
       }
@@ -349,7 +349,7 @@ bool CollisionCheck::checkIntermediateCollisions(const Eigen::VectorXd& start,
   {
     interval = i*dt;
     start_state->interpolate(*end_state,interval,*mid_state) ;
-    if(planning_scene_->isStateColliding(*mid_state))
+    if(planning_scene_->isStateColliding(*mid_state, group_name_))
     {
       return false;
     }
