@@ -143,11 +143,6 @@ protected:
   Eigen::VectorXd raw_costs_;
   Eigen::ArrayXd intermediate_costs_slots_;
 
-  // collision
-  collision_detection::CollisionRequest collision_request_;
-  collision_detection::CollisionRobotConstPtr collision_robot_;
-  collision_detection::CollisionWorldConstPtr collision_world_;
-
   // intermediate collision check support
   std::array<moveit::core::RobotStatePtr,3 > intermediate_coll_states_;   /**< @brief Used in checking collisions between to consecutive poses*/
 
