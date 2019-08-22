@@ -165,8 +165,7 @@ bool CollisionCheck::setMotionPlanRequest(const planning_scene::PlanningSceneCon
   collision_request_.contacts = true;
   collision_request_.verbose = false;
 
-  collision_robot_ = planning_scene->getCollisionRobot();
-  collision_world_ = planning_scene->getCollisionWorld();
+  collision_env_ = planning_scene->getCollisionEnv();
 
   // storing robot state
   robot_state_.reset(new RobotState(robot_model_ptr_));
@@ -244,13 +243,12 @@ bool CollisionCheck::computeCosts(const Eigen::MatrixXd& parameters,
       // checking robot vs world (attached objects, octomap, not in urdf) collisions
       result_world_collision.distance = std::numeric_limits<double>::max();
 
-      collision_world_->checkRobotCollision(request,
+      collision_env_->checkRobotCollision(request,
                                             result_world_collision,
-                                            *collision_robot_,
                                             *robot_state_,
                                             planning_scene_->getAllowedCollisionMatrix());
 
-      collision_robot_->checkSelfCollision(request,
+      collision_env_->checkSelfCollision(request,
                                            result_robot_collision,
                                            *robot_state_,
                                            planning_scene_->getAllowedCollisionMatrix());

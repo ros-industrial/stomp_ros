@@ -145,8 +145,7 @@ protected:
 
   // collision
   collision_detection::CollisionRequest collision_request_;
-  collision_detection::CollisionRobotConstPtr collision_robot_;
-  collision_detection::CollisionWorldConstPtr collision_world_;
+  collision_detection::CollisionEnvConstPtr collision_env_;
 
   // intermediate collision check support
   std::array<moveit::core::RobotStatePtr,3 > intermediate_coll_states_;   /**< @brief Used in checking collisions between to consecutive poses*/

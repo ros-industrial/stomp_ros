@@ -28,8 +28,7 @@
 
 #include <Eigen/Sparse>
 #include <moveit/robot_model/robot_model.h>
-#include <moveit/collision_detection_fcl/collision_world_fcl.h>
-#include <moveit/collision_detection_fcl/collision_robot_fcl.h>
+#include <moveit/collision_detection_fcl/collision_env_fcl.h>
 #include <stomp_moveit/utils/kinematics.h>
 #include "stomp_moveit/cost_functions/stomp_cost_function.h"
 
