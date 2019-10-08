@@ -28,6 +28,7 @@
 
 #include <ros/console.h>
 #include <Eigen/Geometry>
+#include <Eigen/StdVector>
 #include <eigen_conversions/eigen_msg.h>
 #include <moveit/robot_state/robot_state.h>
 #include <moveit/robot_state/conversions.h>
@@ -39,6 +40,11 @@
 #include <trac_ik/trac_ik.hpp>
 #include <boost/optional.hpp>
 
+
+namespace EigenSTL
+{
+  typedef std::vector<Eigen::Affine3d, Eigen::aligned_allocator<Eigen::Affine3d>> vector_Affine3d;
+}
 
 namespace stomp_moveit
 {
@@ -179,9 +185,9 @@ namespace kinematics
    * @param max_samples           Maximum number of samples to be generated
    * @return The sampled poses
    */
-  std::vector<Eigen::Affine3d> sampleCartesianPoses(const moveit_msgs::Constraints& c,
-                                                    const std::vector<double> sampling_resolution = {0.05, 0.05, 0.05, M_PI_2,M_PI_2,M_PI_2},
-                                                    int max_samples =20 );
+  EigenSTL::vector_Affine3d sampleCartesianPoses(const moveit_msgs::Constraints& c,
+                                                 const std::vector<double> sampling_resolution = {0.05, 0.05, 0.05, M_PI_2,M_PI_2,M_PI_2},
+                                                 int max_samples =20 );
 
 
 /**
