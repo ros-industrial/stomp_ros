@@ -448,11 +448,10 @@ bool decodeCartesianConstraint(moveit::core::RobotModelConstPtr model,const move
   return true;
 }
 
-std::vector<Eigen::Affine3d> sampleCartesianPoses(const moveit_msgs::Constraints& c,const std::vector<double> sampling_resolution,int max_samples)
+EigenSTL::vector_Affine3d sampleCartesianPoses(const moveit_msgs::Constraints& c,const std::vector<double> sampling_resolution,int max_samples)
 {
   using namespace Eigen;
-
-  std::vector<Eigen::Affine3d> poses;
+  EigenSTL::vector_Affine3d poses;
 
   // random generator
   std::random_device rd;
