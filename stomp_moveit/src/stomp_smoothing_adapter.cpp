@@ -52,9 +52,12 @@ class StompSmoothingAdapter : public planning_request_adapter::PlanningRequestAd
 public:
   StompSmoothingAdapter() : planning_request_adapter::PlanningRequestAdapter()
   {
+    ros::NodeHandle nh("~");
+    initialize(nh);
   }
 
-  virtual void initialize(const ros::NodeHandle& node_handle) override
+  // todo[noetic] add override again
+  virtual void initialize(const ros::NodeHandle& node_handle)
   {
     ros::NodeHandle nh(node_handle);
     if (!StompPlanner::getConfigData(nh, group_config_))
