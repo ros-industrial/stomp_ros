@@ -107,8 +107,8 @@ public:
     }
 
     // Initialize STOMP Planner
-    stomp_moveit::StompPlanner stompPlanner(req.group_name, group_config_it->second, ps->getRobotModel());
-    if(!stompPlanner.canServiceRequest(seed_req))
+    stomp_moveit::StompPlanner stomp_planner(req.group_name, group_config_it->second, ps->getRobotModel());
+    if(!stomp_planner.canServiceRequest(seed_req))
     {
       ROS_ERROR("STOMP planner unable to service request");
       res.error_code_.val = moveit_msgs::MoveItErrorCodes::FAILURE;
@@ -116,14 +116,14 @@ public:
     }
 
     // Setup Planning Context
-    stompPlanner.clear();
-    stompPlanner.setPlanningScene(ps);
-    stompPlanner.setMotionPlanRequest(seed_req);
+    stomp_planner.clear();
+    stomp_planner.setPlanningScene(ps);
+    stomp_planner.setMotionPlanRequest(seed_req);
 
     // Solve
     ROS_DEBUG("Smoothing result trajectory with STOMP");
     planning_interface::MotionPlanDetailedResponse stomp_res;
-    bool success = stompPlanner.solve(stomp_res);
+    bool success = stomp_planner.solve(stomp_res);
     if (success)
     {
       // Successful responses always contain one entry for trajectory_ and proccessing_time_
