@@ -80,20 +80,20 @@ public:
 
     // STOMP reads the seed trajectory from trajectory constraints so we need to convert the waypoints first
     const size_t seed_waypoint_count = res.trajectory_->getWayPointCount();
-    const std::vector<std::string> joint_names =
-      res.trajectory_->getFirstWayPoint().getJointModelGroup(req.group_name)->getActiveJointModelNames();
-    const size_t joint_count = joint_names.size();
+    const std::vector<std::string> variable_names =
+      res.trajectory_->getFirstWayPoint().getJointModelGroup(req.group_name)->getVariableNames();
+    const size_t variable_count = variable_names.size();
     planning_interface::MotionPlanRequest seed_req = req;
     seed_req.trajectory_constraints.constraints.clear();
     seed_req.trajectory_constraints.constraints.resize(seed_waypoint_count);
     for (size_t i = 0; i < seed_waypoint_count; ++i)
     {
-      seed_req.trajectory_constraints.constraints[i].joint_constraints.resize(joint_count);
-      for (size_t j = 0; j < joint_count; ++j)
+      seed_req.trajectory_constraints.constraints[i].joint_constraints.resize(variable_count);
+      for (size_t j = 0; j < variable_count; ++j)
       {
-        seed_req.trajectory_constraints.constraints[i].joint_constraints[j].joint_name = joint_names[j];
+        seed_req.trajectory_constraints.constraints[i].joint_constraints[j].joint_name = variable_names[j];
         seed_req.trajectory_constraints.constraints[i].joint_constraints[j].position =
-          res.trajectory_->getWayPoint(i).getVariablePosition(joint_names[j]);
+          res.trajectory_->getWayPoint(i).getVariablePosition(variable_names[j]);
       }
     }
 
