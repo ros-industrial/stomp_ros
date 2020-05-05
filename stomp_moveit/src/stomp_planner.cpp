@@ -409,9 +409,8 @@ bool StompPlanner::getSeedParameters(Eigen::MatrixXd& parameters) const
     }
 
     Eigen::VectorXd solution;
-    Eigen::VectorXd seed = start;
     ik_solver_->setKinematicState(state);
-    if(ik_solver_->solve(seed,tool_constraints.get(),solution))
+    if(ik_solver_->solve(goal,tool_constraints.get(),solution))
     {
       goal = solution;
       found_goal = true;
@@ -722,7 +721,7 @@ bool StompPlanner::canServiceRequest(const moveit_msgs::MotionPlanRequest &req) 
   // check that we have joint or cartesian constraints at the goal
   const auto& gc = req.goal_constraints[0];
   if ((gc.joint_constraints.size() == 0) &&
-		  !utils::kinematics::isCartesianConstraints(gc))
+      !utils::kinematics::isCartesianConstraints(gc))
   {
     ROS_ERROR("STOMP couldn't find either a joint or cartesian goal.");
     return false;
