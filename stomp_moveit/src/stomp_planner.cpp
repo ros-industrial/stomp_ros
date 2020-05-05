@@ -177,7 +177,7 @@ bool StompPlanner::solve(planning_interface::MotionPlanDetailedResponse &res)
   using namespace stomp_core;
 
   // initializing response
-  res.description_.resize(1,"");
+  res.description_.resize(1,"plan");
   res.processing_time_.resize(1);
   res.trajectory_.resize(1);
   res.error_code_.val = moveit_msgs::MoveItErrorCodes::SUCCESS;

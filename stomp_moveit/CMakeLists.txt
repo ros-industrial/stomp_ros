@@ -70,6 +70,11 @@ add_library(${PROJECT_NAME}_planner_manager
   src/stomp_planner_manager.cpp)
 target_link_libraries(${PROJECT_NAME}_planner_manager ${PROJECT_NAME} ${catkin_LIBRARIES})
 
+# smoothing adapter plugin
+add_library(${PROJECT_NAME}_smoothing_adapter
+  src/stomp_smoothing_adapter.cpp)
+target_link_libraries(${PROJECT_NAME}_smoothing_adapter ${PROJECT_NAME} ${catkin_LIBRARIES})
+
 # cost function plugin(s)
 add_library(${PROJECT_NAME}_cost_functions
   src/cost_functions/collision_check.cpp
@@ -116,6 +121,7 @@ install(TARGETS
     ${PROJECT_NAME}_noise_generators
     ${PROJECT_NAME}_noisy_filters
     ${PROJECT_NAME}_planner_manager
+    ${PROJECT_NAME}_smoothing_adapter
     ${PROJECT_NAME}_update_filters
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
@@ -128,12 +134,14 @@ install(FILES
     noisy_filter_plugins.xml
     planner_manager_plugins.xml
     update_filter_plugins.xml
+    smoothing_adapter_plugins.xml
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
 install(
   FILES
     planner_manager_plugins.xml
+    smoothing_adapter_plugins.xml
   DESTINATION
     ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
