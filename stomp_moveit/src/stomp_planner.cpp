@@ -267,7 +267,7 @@ bool StompPlanner::solve(planning_interface::MotionPlanDetailedResponse &res)
     }
 
     // creating request response
-    moveit::core::RobotState robot_state(robot_model_);
+    moveit::core::RobotState robot_state = planning_scene_->getCurrentState();
     moveit::core::robotStateMsgToRobotState(request_.start_state,robot_state);
     res.trajectory_[0]= robot_trajectory::RobotTrajectoryPtr(new robot_trajectory::RobotTrajectory(
         robot_model_,group_));
@@ -328,7 +328,7 @@ bool StompPlanner::getSeedParameters(Eigen::MatrixXd& parameters) const
    * Validating seed trajectory by ensuring that it does obey the
    * motion plan request constraints
    */
-  moveit::core::RobotState state (robot_model_);
+  moveit::core::RobotState state = planning_scene_->getCurrentState();
   const auto* group = state.getJointModelGroup(group_);
   const auto& joint_names = group->getActiveJointModelNames();
   const auto& tool_link = group->getLinkModelNames().back();
@@ -471,7 +471,7 @@ bool StompPlanner::parametersToJointTrajectory(const Eigen::MatrixXd& parameters
 
   trajectory_processing::IterativeParabolicTimeParameterization time_generator;
   robot_trajectory::RobotTrajectory traj(robot_model_,group_);
-  moveit::core::RobotState robot_state(robot_model_);
+  moveit::core::RobotState robot_state = planning_scene_->getCurrentState();
   if(!moveit::core::robotStateMsgToRobotState(request_.start_state,robot_state))
   {
     return false;
@@ -587,7 +587,7 @@ bool StompPlanner::getStartAndGoal(Eigen::VectorXd& start, Eigen::VectorXd& goal
   using namespace moveit::core;
   using namespace utils::kinematics;
 
-  RobotStatePtr state(new RobotState(robot_model_));
+  RobotStatePtr state(new RobotState(planning_scene_->getCurrentState()));
   const JointModelGroup* joint_group = robot_model_->getJointModelGroup(group_);
   std::string tool_link = joint_group->getLinkModelNames().back();
   bool found_goal = false;
@@ -595,7 +595,6 @@ bool StompPlanner::getStartAndGoal(Eigen::VectorXd& start, Eigen::VectorXd& goal
   try
   {
     // copying start state
-    state->setToDefaultValues();
     if(!robotStateMsgToRobotState(request_.start_state,*state))
     {
       ROS_ERROR("%s Failed to extract start state from MotionPlanRequest",getName().c_str());
