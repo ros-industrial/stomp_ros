@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<?xml-model href="http://download.ros.org/schema/package_format2.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
-<package format="2">
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
   <name>stomp_moveit</name>
   <version>0.1.1</version>
   <description>This package wraps the STOMP planner functionality in stomp_core so that it can be used within the MoveIt Motion Planning Framework </description>
@@ -30,6 +30,11 @@
   <depend>tf</depend>
   <depend>trac_ik_lib</depend>
   <depend>visualization_msgs</depend>
+
+  <!-- work around https://bitbucket.org/traclabs/trac_ik/issues/72/noetic-nlopt-cxx-dev-should-be-a -->
+  <build_depend condition="$ROS_DISTRO == noetic">libnlopt-cxx-dev</build_depend>
+  <build_export_depend condition="$ROS_DISTRO == noetic">libnlopt-cxx-dev</build_export_depend>
+  <exec_depend condition="$ROS_DISTRO == noetic">libnlopt-dev</exec_depend>
 
   <export>
     <moveit_core plugin="${prefix}/planner_manager_plugins.xml"/>
