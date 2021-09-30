@@ -1,5 +1,8 @@
 # stomp_ros
 
+[![Build Status: Ubuntu Bionic (Actions)](https://github.com/ros-industrial/stomp_ros/workflows/CI%20-%20Ubuntu%20Bionic/badge.svg?branch=indigo-devel)](https://github.com/ros-industrial/stomp_ros/actions?query=workflow%3A%22CI+-+Ubuntu+Bionic%22)
+[![Build Status: Ubuntu Focal (Actions)](https://github.com/ros-industrial/stomp_ros/workflows/CI%20-%20Ubuntu%20Focal/badge.svg?branch=indigo-devel)](https://github.com/ros-industrial/stomp_ros/actions?query=workflow%3A%22CI+-+Ubuntu+Focal%22)
+
 #### Build
 - Build the workspace:
   - Cd into the catkin workspace directory and type the following command:
