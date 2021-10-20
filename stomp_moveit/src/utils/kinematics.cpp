@@ -366,9 +366,9 @@ bool decodeCartesianConstraint(moveit::core::RobotModelConstPtr model,const move
        }
 
        using SP = shape_msgs::SolidPrimitive;
-       tolerance[0] = bv.dimensions[SP::BOX_X];
-       tolerance[1] = bv.dimensions[SP::BOX_Y];
-       tolerance[2] = bv.dimensions[SP::BOX_Z];
+       tolerance[0] = bv.dimensions[SP::BOX_X] / 2.0;
+       tolerance[1] = bv.dimensions[SP::BOX_Y] / 2.0;
+       tolerance[2] = bv.dimensions[SP::BOX_Z] / 2.0;
      }
      break;
 
@@ -497,9 +497,9 @@ EigenSTL::vector_Affine3d sampleCartesianPoses(const moveit_msgs::Constraints& c
         }
 
         using SP = shape_msgs::SolidPrimitive;
-        tolerances[0] = bv.dimensions[SP::BOX_X];
-        tolerances[1] = bv.dimensions[SP::BOX_Y];
-        tolerances[2] = bv.dimensions[SP::BOX_Z];
+        tolerances[0] = bv.dimensions[SP::BOX_X] / 2.0;
+        tolerances[1] = bv.dimensions[SP::BOX_Y] / 2.0;
+        tolerances[2] = bv.dimensions[SP::BOX_Z] / 2.0;
       }
       break;
 
