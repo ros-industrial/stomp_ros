@@ -26,7 +26,7 @@
   <depend>moveit_ros_planning</depend>
   <depend>pluginlib</depend>
   <depend>roscpp</depend>
-  <depend>stomp_core</depend>
+  <depend>stomp</depend>
   <depend>tf</depend>
   <depend>trac_ik_lib</depend>
   <depend>visualization_msgs</depend>

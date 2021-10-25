@@ -121,7 +121,7 @@ bool GoalGuidedMultivariateGaussian::configure(const XmlRpc::XmlRpcValue& config
 
 bool GoalGuidedMultivariateGaussian::setMotionPlanRequest(const planning_scene::PlanningSceneConstPtr& planning_scene,
                  const moveit_msgs::MotionPlanRequest &req,
-                 const stomp_core::StompConfiguration &config,
+                 const stomp::StompConfiguration &config,
                  moveit_msgs::MoveItErrorCodes& error_code)
 {
   bool succeed = setupNoiseGeneration(planning_scene,req,config,error_code) &&
@@ -132,7 +132,7 @@ bool GoalGuidedMultivariateGaussian::setMotionPlanRequest(const planning_scene::
 
 bool GoalGuidedMultivariateGaussian::setupNoiseGeneration(const planning_scene::PlanningSceneConstPtr& planning_scene,
                                                const moveit_msgs::MotionPlanRequest &req,
-                                               const stomp_core::StompConfiguration &config,
+                                               const stomp::StompConfiguration &config,
                                                moveit_msgs::MoveItErrorCodes& error_code)
 {
   using namespace Eigen;
@@ -179,7 +179,7 @@ bool GoalGuidedMultivariateGaussian::setupNoiseGeneration(const planning_scene::
 
 bool GoalGuidedMultivariateGaussian::setupGoalConstraints(const planning_scene::PlanningSceneConstPtr& planning_scene,
                                                const moveit_msgs::MotionPlanRequest &req,
-                                               const stomp_core::StompConfiguration &config,
+                                               const stomp::StompConfiguration &config,
                                                moveit_msgs::MoveItErrorCodes& error_code)
 {
   using namespace Eigen;

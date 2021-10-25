@@ -28,7 +28,7 @@
 
 #include <string>
 #include <XmlRpc.h>
-#include <stomp_core/utils.h>
+#include <stomp/utils.h>
 #include <moveit_msgs/GetMotionPlan.h>
 #include <moveit/robot_model/robot_model.h>
 #include <moveit/robot_trajectory/robot_trajectory.h>
@@ -88,7 +88,7 @@ public:
    */
   virtual bool setMotionPlanRequest(const planning_scene::PlanningSceneConstPtr& planning_scene,
                    const moveit_msgs::MotionPlanRequest &req,
-                   const stomp_core::StompConfiguration &config,
+                   const stomp::StompConfiguration &config,
                    moveit_msgs::MoveItErrorCodes& error_code) = 0;
 
 

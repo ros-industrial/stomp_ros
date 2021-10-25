@@ -27,7 +27,7 @@
 #ifndef INCLUDE_STOMP_MOVEIT_UTILS_POLYNOMIAL_H_
 #define INCLUDE_STOMP_MOVEIT_UTILS_POLYNOMIAL_H_
 
-#include <stomp_core/utils.h>
+#include <stomp/utils.h>
 #include <moveit/robot_model/robot_model.h>
 #include <Eigen/Core>
 

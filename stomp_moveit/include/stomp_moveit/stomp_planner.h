@@ -27,7 +27,7 @@
 #define STOMP_MOVEIT_STOMP_PLANNER_H_
 
 #include <moveit/planning_interface/planning_interface.h>
-#include <stomp_core/stomp.h>
+#include <stomp/stomp.h>
 #include <stomp_moveit/stomp_optimization_task.h>
 #include <stomp_moveit/utils/kinematics.h>
 #include <boost/thread.hpp>
@@ -159,10 +159,10 @@ protected:
 protected:
 
   // stomp optimization
-  std::shared_ptr< stomp_core::Stomp> stomp_;
+  std::shared_ptr< stomp::Stomp> stomp_;
   StompOptimizationTaskPtr task_;
   XmlRpc::XmlRpcValue config_;
-  stomp_core::StompConfiguration stomp_config_;
+  stomp::StompConfiguration stomp_config_;
 
   // robot model
   moveit::core::RobotModelConstPtr robot_model_;

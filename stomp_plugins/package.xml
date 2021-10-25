@@ -22,7 +22,7 @@
   <depend>pluginlib</depend>
   <depend>rosconsole</depend>
   <depend>roslib</depend>
-  <depend>stomp_core</depend>
+  <depend>stomp</depend>
   <depend>stomp_moveit</depend>
   <depend>xmlrpcpp</depend>
 

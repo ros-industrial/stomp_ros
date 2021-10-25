@@ -10,16 +10,6 @@
 catkin build
 ```
 
-#### Unit Test
-Cd into the catkin workspace directory and type the following command:
-```
-catkin run_tests 
-```
-- Run the stomp_core unit tests:
-```
-catkin run_tests stomp_core
-```
-
 #### Seeding Stomp
 The STOMP planner works through optimization: it starts with a given trajectory, called the ***seed***, and iteratively attempts to improve it. This seed is set:
  1. By default, it is set to the joint interpolated path between the start and end joint configurations.
