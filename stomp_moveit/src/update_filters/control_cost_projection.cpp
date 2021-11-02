@@ -28,7 +28,7 @@
 #include <stomp_moveit/update_filters/control_cost_projection.h>
 #include <ros/console.h>
 #include <pluginlib/class_list_macros.h>
-#include <stomp_core/utils.h>
+#include <stomp/utils.h>
 
 PLUGINLIB_EXPORT_CLASS(stomp_moveit::update_filters::ControlCostProjection,stomp_moveit::update_filters::StompUpdateFilter);
 
@@ -75,12 +75,12 @@ bool ControlCostProjection::configure(const XmlRpc::XmlRpcValue& config)
 
 bool ControlCostProjection::setMotionPlanRequest(const planning_scene::PlanningSceneConstPtr& planning_scene,
                  const moveit_msgs::MotionPlanRequest &req,
-                 const stomp_core::StompConfiguration &config,
+                 const stomp::StompConfiguration &config,
                  moveit_msgs::MoveItErrorCodes& error_code)
 {
 
   num_timesteps_ = config.num_timesteps;
-  stomp_core::generateSmoothingMatrix(num_timesteps_,DEFAULT_TIME_STEP,projection_matrix_M_);
+  stomp::generateSmoothingMatrix(num_timesteps_,DEFAULT_TIME_STEP,projection_matrix_M_);
 
   // zeroing out first and last rows
   projection_matrix_M_.topRows(1) = Eigen::VectorXd::Zero(num_timesteps_).transpose();

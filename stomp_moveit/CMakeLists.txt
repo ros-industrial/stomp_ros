@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.0.2)
 project(stomp_moveit)
+
 find_package(catkin REQUIRED COMPONENTS
   cmake_modules
   eigen_conversions
@@ -10,11 +11,12 @@ find_package(catkin REQUIRED COMPONENTS
   moveit_ros_planning
   pluginlib
   roscpp
-  stomp_core
   tf
   trac_ik_lib
   visualization_msgs
 )
+
+find_package(stomp REQUIRED)
 find_package(Eigen3 REQUIRED)
 find_package(Boost REQUIRED COMPONENTS system)
 
@@ -35,13 +37,13 @@ catkin_package(
     moveit_ros_planning
     pluginlib
     roscpp
-    stomp_core
     tf
     trac_ik_lib
     visualization_msgs
   DEPENDS
     Boost
     EIGEN3
+    stomp
 )
 
 ###########
@@ -62,25 +64,26 @@ add_library(${PROJECT_NAME}
 )
 
 target_link_libraries(${PROJECT_NAME}
+  stomp::stomp
   ${catkin_LIBRARIES}
 )
 
 # planner manager plugin
 add_library(${PROJECT_NAME}_planner_manager
   src/stomp_planner_manager.cpp)
-target_link_libraries(${PROJECT_NAME}_planner_manager ${PROJECT_NAME} ${catkin_LIBRARIES})
+target_link_libraries(${PROJECT_NAME}_planner_manager ${PROJECT_NAME} stomp::stomp ${catkin_LIBRARIES})
 
 # smoothing adapter plugin
 add_library(${PROJECT_NAME}_smoothing_adapter
   src/stomp_smoothing_adapter.cpp)
-target_link_libraries(${PROJECT_NAME}_smoothing_adapter ${PROJECT_NAME} ${catkin_LIBRARIES})
+target_link_libraries(${PROJECT_NAME}_smoothing_adapter ${PROJECT_NAME} stomp::stomp ${catkin_LIBRARIES})
 
 # cost function plugin(s)
 add_library(${PROJECT_NAME}_cost_functions
   src/cost_functions/collision_check.cpp
   src/cost_functions/obstacle_distance_gradient.cpp
  )
-target_link_libraries(${PROJECT_NAME}_cost_functions ${catkin_LIBRARIES})
+target_link_libraries(${PROJECT_NAME}_cost_functions stomp::stomp ${catkin_LIBRARIES})
 
 # filter plugin(s)
 add_library(${PROJECT_NAME}_noisy_filters
@@ -88,7 +91,7 @@ add_library(${PROJECT_NAME}_noisy_filters
   src/noisy_filters/multi_trajectory_visualization.cpp
 )
 
-target_link_libraries(${PROJECT_NAME}_noisy_filters ${catkin_LIBRARIES})
+target_link_libraries(${PROJECT_NAME}_noisy_filters stomp::stomp ${catkin_LIBRARIES})
 
 # update plugin(s)
 add_library(${PROJECT_NAME}_update_filters
@@ -98,13 +101,13 @@ add_library(${PROJECT_NAME}_update_filters
   src/update_filters/update_logger.cpp
   src/utils/polynomial.cpp
  )
-target_link_libraries(${PROJECT_NAME}_update_filters ${catkin_LIBRARIES})
+target_link_libraries(${PROJECT_NAME}_update_filters stomp::stomp ${catkin_LIBRARIES})
 
 # noise generator plugin(s)
 add_library(${PROJECT_NAME}_noise_generators
   src/noise_generators/normal_distribution_sampling.cpp
  )
-target_link_libraries(${PROJECT_NAME}_noise_generators ${catkin_LIBRARIES})
+target_link_libraries(${PROJECT_NAME}_noise_generators stomp::stomp ${catkin_LIBRARIES})
 
 #############
 ## Install ##

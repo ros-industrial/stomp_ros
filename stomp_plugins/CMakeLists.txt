@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.0.2)
 project(stomp_plugins)
+
 find_package(catkin REQUIRED COMPONENTS
   cmake_modules
   eigen_conversions
@@ -8,11 +9,11 @@ find_package(catkin REQUIRED COMPONENTS
   pluginlib
   rosconsole
   roslib
-  stomp_core
   stomp_moveit
   xmlrpcpp
 )
 
+find_package(stomp REQUIRED)
 find_package(Eigen3 REQUIRED)
 find_package(Boost REQUIRED COMPONENTS system)
 
@@ -37,10 +38,12 @@ catkin_package(
     pluginlib
     rosconsole
     roslib
-    stomp_core
     stomp_moveit
     xmlrpcpp
-  DEPENDS Boost EIGEN3
+  DEPENDS
+    Boost
+    EIGEN3
+    stomp
 )
 
 ###########
@@ -58,19 +61,19 @@ include_directories(include
 add_library(${PROJECT_NAME}_cost_functions
   src/cost_functions/tool_goal_pose.cpp
  )
-target_link_libraries(${PROJECT_NAME}_cost_functions ${catkin_LIBRARIES})
+target_link_libraries(${PROJECT_NAME}_cost_functions stomp::stomp ${catkin_LIBRARIES})
 
 # noise generator plugin(s)
 add_library(${PROJECT_NAME}_noise_generators
   src/noise_generators/goal_guided_multivariate_gaussian.cpp
  )
-target_link_libraries(${PROJECT_NAME}_noise_generators ${catkin_LIBRARIES})
+target_link_libraries(${PROJECT_NAME}_noise_generators stomp::stomp ${catkin_LIBRARIES})
 
 # update plugin(s)
 add_library(${PROJECT_NAME}_update_filters
   src/update_filters/constrained_cartesian_goal.cpp
  )
-target_link_libraries(${PROJECT_NAME}_update_filters ${catkin_LIBRARIES})
+target_link_libraries(${PROJECT_NAME}_update_filters stomp::stomp ${catkin_LIBRARIES})
 
 #############
 ## Install ##

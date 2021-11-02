@@ -44,3 +44,4 @@ jobs:
         env:
           ROS_DISTRO: ${{ matrix.ros_distro }}
           ROS_REPO: ${{ matrix.ros_repo }}
+          UPSTREAM_WORKSPACE: 'dependencies.rosinstall'

@@ -27,7 +27,7 @@
 #include <moveit/robot_state/conversions.h>
 #include <stomp_moveit/stomp_planner.h>
 #include <class_loader/class_loader.hpp>
-#include <stomp_core/utils.h>
+#include <stomp/utils.h>
 #include <moveit/trajectory_processing/iterative_time_parameterization.h>
 #include <stomp_moveit/utils/kinematics.h>
 #include <stomp_moveit/utils/polynomial.h>
@@ -46,7 +46,7 @@ const static double MAX_START_DISTANCE_THRESH = 0.5;
  * @param stomp_config  The stomp configuration structure
  * @return True if successfully parsed, otherwise false.
  */
-bool parseConfig(XmlRpc::XmlRpcValue config,const moveit::core::JointModelGroup* group,stomp_core::StompConfiguration& stomp_config)
+bool parseConfig(XmlRpc::XmlRpcValue config,const moveit::core::JointModelGroup* group,stomp::StompConfiguration& stomp_config)
 {
   using namespace XmlRpc;
   // Set default values for optional config parameters
@@ -147,7 +147,7 @@ void StompPlanner::setup()
       throw std::logic_error(msg);
     }
 
-    stomp_.reset(new stomp_core::Stomp(stomp_config_,task_));
+    stomp_.reset(new stomp::Stomp(stomp_config_,task_));
   }
   catch(XmlRpc::XmlRpcException& e)
   {
@@ -174,7 +174,7 @@ bool StompPlanner::solve(planning_interface::MotionPlanResponse &res)
 
 bool StompPlanner::solve(planning_interface::MotionPlanDetailedResponse &res)
 {
-  using namespace stomp_core;
+  using namespace stomp;
 
   // initializing response
   res.description_.resize(1,"plan");

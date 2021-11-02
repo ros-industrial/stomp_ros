@@ -29,7 +29,7 @@
 #include <memory>
 #include <moveit_msgs/MotionPlanRequest.h>
 #include <moveit/robot_model/robot_model.h>
-#include <stomp_core/task.h>
+#include <stomp/task.h>
 #include <stomp_moveit/cost_functions/stomp_cost_function.h>
 #include <XmlRpcValue.h>
 #include <pluginlib/class_loader.h>
@@ -59,7 +59,7 @@ typedef std::shared_ptr<NoiseGeneratorLoader> NoiseGeneratorLoaderPtr;
  * All examples are located here @ref stomp_moveit_examples
  *
  */
-class StompOptimizationTask: public stomp_core::Task
+class StompOptimizationTask: public stomp::Task
 {
 public:
   /**
@@ -82,7 +82,7 @@ public:
    */
   virtual bool setMotionPlanRequest(const planning_scene::PlanningSceneConstPtr& planning_scene,
                    const moveit_msgs::MotionPlanRequest &req,
-                   const stomp_core::StompConfiguration &config,
+                   const stomp::StompConfiguration &config,
                    moveit_msgs::MoveItErrorCodes& error_code);
 
   /**

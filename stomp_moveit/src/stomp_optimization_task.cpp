@@ -316,7 +316,7 @@ bool StompOptimizationTask::computeCosts(const Eigen::MatrixXd& parameters,
 
 bool StompOptimizationTask::setMotionPlanRequest(const planning_scene::PlanningSceneConstPtr& planning_scene,
                                         const moveit_msgs::MotionPlanRequest &req,
-                                        const stomp_core::StompConfiguration &config,
+                                        const stomp::StompConfiguration &config,
                                         moveit_msgs::MoveItErrorCodes& error_code)
 {
   for(auto p: noise_generators_)

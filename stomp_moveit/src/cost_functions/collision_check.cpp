@@ -147,7 +147,7 @@ bool CollisionCheck::initialize(moveit::core::RobotModelConstPtr robot_model_ptr
 
 bool CollisionCheck::setMotionPlanRequest(const planning_scene::PlanningSceneConstPtr& planning_scene,
                  const moveit_msgs::MotionPlanRequest &req,
-                 const stomp_core::StompConfiguration &config,
+                 const stomp::StompConfiguration &config,
                  moveit_msgs::MoveItErrorCodes& error_code)
 {
   using namespace moveit::core;
